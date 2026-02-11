@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа по криптографии</title>
     <link rel="stylesheet" href="style.css">
-    <title>Title</title>
 </head>
 <body>
+<div class="container">
+    <h1>Лабораторная работа по криптографии</h1>
+    <h2>Вариант 2</h2>
+
+    <div class="algorithm-selector">
+        <div class="algo-option selected" data-algo="rail">
+            <div class="algo-name">Железнодорожная изгородь</div>
+            <div class="algo-desc">Ключ: число (высота)</div>
+        </div>
+        <div class="algo-option" data-algo="vigenere">
+            <div class="algo-name">Виженер (прогрессивный)</div>
+            <div class="algo-desc">Ключ: слово</div>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="key">Ключ:</label>
+        <input type="text" id="key" placeholder="Введите ключ">
+    </div>
+
+    <div class="input-group">
+        <label for="inputText">Исходный текст:</label>
+        <textarea id="inputText" placeholder="Введите текст на русском языке..."></textarea>
+        <div class="counter">Символов: <span id="totalCount">0</span> | Русских букв: <span id="russianCount">0</span></div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn encrypt" id="encryptBtn">Зашифровать</button>
+        <button class="btn decrypt" id="decryptBtn">Расшифровать</button>
+        <button class="btn load" id="loadBtn">Загрузить из файла</button>
+        <input type="file" id="fileInput" accept=".txt" style="display:none;">
+        <button class="btn save" id="saveBtn">Сохранить в файл</button>
+    </div>
+
+    <div class="result-group">
+        <label for="outputText">Результат:</label>
+        <textarea id="outputText" readonly></textarea>
+        <div class="counter">Символов: <span id="resultCount">0</span></div>
+    </div>
+    <div id="message" class="message"></div>
+    <div class="visualization" id="visualization">
+        <h3>Визуализация процесса:</h3>
+        <div id="railViz" class="rail-viz"></div>
+        <div id="vigenereViz" class="vigenere-viz"></div>
+    </div>
+
+
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
