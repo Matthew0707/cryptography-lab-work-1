@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const keyInput = document.getElementById('key');
     const encryptBtn = document.getElementById('encryptBtn');
     const decryptBtn = document.getElementById('decryptBtn');
+    const clearBtn = document.getElementById('clearBtn');
     const saveBtn = document.getElementById('saveBtn');
     const loadBtn = document.getElementById('loadBtn');
     const fileInput = document.getElementById('fileInput');
@@ -358,6 +359,16 @@ document.addEventListener('DOMContentLoaded', function() {
         tableContainer.appendChild(table);
         vigenereViz.appendChild(tableContainer);
     }
+
+    clearBtn.addEventListener('click', function() {
+        if (inputText.value === '' && keyInput.value === '') {
+            showMessage('Ошибка: нет текста для очистки ', true);
+        } else {
+            inputText.value = '';
+            keyInput.value = '';
+            showMessage('Текст очищен');
+        }
+    });
 
     function processOperation(isEncrypt) {
         clearMessage();
