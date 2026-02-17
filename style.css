@@ -351,6 +351,17 @@ textarea {
     border: 1px solid #f5c6cb;
 }
 
+.vigenere-table th div:first-child {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.vigenere-table th div:last-child {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
 @media (max-width: 768px) {
     .container {
         padding: 20px;

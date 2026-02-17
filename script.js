@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         for (let i = 0; i < russianAlphabet.length; i++) {
             const th = document.createElement('th');
-            th.textContent = russianAlphabet[i];
+            th.innerHTML = `<div>${i}</div><div>${russianAlphabet[i]}</div>`;
             headerRow.appendChild(th);
         }
         table.appendChild(headerRow);
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = document.createElement('tr');
 
             const keyCell = document.createElement('th');
-            keyCell.textContent = russianAlphabet[i];
+            keyCell.innerHTML = `<div>${i}</div><div>${russianAlphabet[i]}</div>`;
             row.appendChild(keyCell);
 
             for (let j = 0; j < russianAlphabet.length; j++) {
@@ -342,10 +342,12 @@ document.addEventListener('DOMContentLoaded', function() {
     clearBtn.addEventListener('click', function() {
         if (inputText.value === '' && keyInput.value === '') {
             showMessage('Ошибка: нет текста для очистки ', true);
+
         } else {
             inputText.value = '';
             keyInput.value = '';
             showMessage('Текст очищен');
+            updateCounters();
         }
     });
 
