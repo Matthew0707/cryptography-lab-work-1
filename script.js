@@ -72,39 +72,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const keyNum = parseInt(key);
         if (isNaN(keyNum) || keyNum < 1) throw new Error('Ключ должен быть числом не менее 1');
-
         if (keyNum > 100) throw new Error('Ключ не должен превышать 100');
 
         if (keyNum === 1) {
-            showRailViz(filteredText, 1);
+            showRailViz(filteredText, keyNum);
             return filteredText;
         }
 
-        const rails = Array(keyNum).fill().map(() => []);
-        let rail = 0;
-        let direction = 1;
+        const result = new Array(filteredText.length);
+        let currentIndex = 0;
 
-        for (let i = 0; i < filteredText.length; i++) {
-            rails[rail].push({char: filteredText[i], index: i});
+        for (let rail = 0; rail < keyNum; rail++) {
+            const step = 2 * (keyNum - 1);
+            let pos = rail;
 
-            if (rail === 0) {
-                direction = 1;
-            } else if (rail === keyNum - 1) {
-                direction = -1;
+            while (pos < filteredText.length) {
+                result[currentIndex++] = filteredText[pos];
+
+                if (rail > 0 && rail < keyNum - 1) {
+                    const secondPos = pos + 2 * (keyNum - 1 - rail);
+                    if (secondPos < filteredText.length) {
+                        result[currentIndex++] = filteredText[secondPos];
+                    }
+                }
+
+                pos += step;
             }
-
-            rail += direction;
         }
 
-        let result = '';
-        rails.forEach(rail => {
-            rail.forEach(cell => {
-                result += cell.char;
-            });
-        });
-
         showRailViz(filteredText, keyNum);
-        return result;
+        return result.join('');
     }
 
     function railDecrypt(text, key) {
@@ -115,52 +112,34 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isNaN(keyNum) || keyNum < 1) throw new Error('Ключ должен быть числом не менее 1');
 
         if (keyNum === 1) {
-            showRailViz(filteredText, 1);
+            showRailViz(filteredText, keyNum);
             return filteredText;
         }
 
-        const rails = Array(keyNum).fill().map(() => []);
-        let rail = 0;
-        let direction = 1;
+        const result = new Array(filteredText.length);
+        let currentIndex = 0;
 
-        for (let i = 0; i < filteredText.length; i++) {
-            rails[rail].push({index: i});
+        const step = 2 * (keyNum - 1);
 
-            if (rail === 0) {
-                direction = 1;
-            } else if (rail === keyNum - 1) {
-                direction = -1;
+        for (let rail = 0; rail < keyNum; rail++) {
+            let pos = rail;
+
+            while (pos < filteredText.length) {
+                result[pos] = filteredText[currentIndex++];
+
+                if (rail > 0 && rail < keyNum - 1) {
+                    const secondPos = pos + 2 * (keyNum - 1 - rail);
+                    if (secondPos < filteredText.length) {
+                        result[secondPos] = filteredText[currentIndex++];
+                    }
+                }
+
+                pos += step;
             }
-
-            rail += direction;
-        }
-
-        let index = 0;
-        for (let i = 0; i < keyNum; i++) {
-            for (let j = 0; j < rails[i].length; j++) {
-                rails[i][j].char = filteredText[index++];
-            }
-        }
-
-        const resultArray = new Array(filteredText.length);
-        rail = 0;
-        direction = 1;
-
-        for (let i = 0; i < filteredText.length; i++) {
-            const cell = rails[rail].shift();
-            resultArray[cell.index] = cell.char;
-
-            if (rail === 0) {
-                direction = 1;
-            } else if (rail === keyNum - 1) {
-                direction = -1;
-            }
-
-            rail += direction;
         }
 
         showRailViz(filteredText, keyNum);
-        return resultArray.join('');
+        return result.join('');
     }
 
     function showRailViz(text, key) {
